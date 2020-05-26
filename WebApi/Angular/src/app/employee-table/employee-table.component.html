@@ -1,0 +1,76 @@
+<kendo-grid
+            [kendoGridBinding]="EmployeeList"
+            kendoGridSelectBy="id"
+            [selectedKeys]="mySelection"
+            [pageSize]="20"
+            [pageable]="true"
+            [sortable]="true"
+            [groupable]="true"
+            [reorderable]="true"
+            [resizable]="true"
+            [height]="480"
+            [columnMenu]="{ filter: true }"
+        >
+            <ng-template kendoGridToolbarTemplate>
+                <input placeholder="Search in all columns..." kendoTextBox (input)="onFilter($event.target.value)"/>
+                <button kendoGridExcelCommand type="button" icon="file-excel" style="float:right;">Export to Excel</button>
+            </ng-template>
+            <kendo-grid-checkbox-column
+                [width]="45"
+                [headerClass]="{'text-center': true}"
+                [class]="{'text-center': true}"
+                [resizable]="false"
+                [columnMenu]="false"
+                showSelectAll="true"
+            ></kendo-grid-checkbox-column>
+            <kendo-grid-column-group title="Employee" [columnMenu]="false">
+                <kendo-grid-column field="name" title="Contact Name" [width]="220">
+                    <ng-template kendoGridCellTemplate let-dataItem>
+                        <div class="customer-name">{{ dataItem.name }}</div>
+                    </ng-template>
+                </kendo-grid-column>
+                <kendo-grid-column field="job_title" title="Job Title" [width]="220">
+                </kendo-grid-column>
+                <kendo-grid-column
+                    field="country_name"
+                    title="Country"
+                    [width]="100"
+                    [class]="{'text-center': true}"
+                    [resizable]="true"
+                >
+                   
+                </kendo-grid-column>
+               
+            </kendo-grid-column-group>
+            
+            <kendo-grid-column-group title="Contacts" [columnMenu]="false">
+                <kendo-grid-column field="phone_no" title="Phone" [width]="130">
+                </kendo-grid-column>
+                <kendo-grid-column field="address" title="Address" [width]="200">
+                </kendo-grid-column>
+            </kendo-grid-column-group>
+
+            <kendo-grid-command-column width="220">
+                <ng-template kendoGridCellTemplate let-dataItem>
+                  <button
+                    kendoGridEditCommand
+                    class="k-primary"
+                    (click)="onEdit(dataItem)"
+                  >
+                    Edit
+                  </button>
+                  <button kendoGridRemoveCommand
+                    (click)="onDelete(dataItem.id)"
+                  >
+                    Delete
+                  </button>
+                </ng-template>
+              </kendo-grid-command-column>
+            <kendo-grid-excel fileName="Employees.xlsx"></kendo-grid-excel>
+        </kendo-grid>
+        <button
+                  mat-raised-button
+                  color="accent"
+                  (click)="onCreate()">
+                  Create
+                </button>
